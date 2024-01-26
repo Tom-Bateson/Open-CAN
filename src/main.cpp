@@ -1,23 +1,16 @@
-#include "can_h.hpp"
+#include "canFunctions.hpp"
 
 #include <Arduino.h>
 
 unsigned char* message;
 byte data[8] = {};
 
-void setup()
-{
+void setup() {
   Serial.begin(115200);
   startCAN();
 }
 
-
-void loop()
-{
+void loop(){
   // message = receiveCAN();
   // sendStandardCAN();
 }
-
-/*********************************************************************************************************
-  END FILE
-*********************************************************************************************************/
