@@ -2,6 +2,8 @@
 
 #include <Arduino.h>
 
+unsigned char* message;
+byte data[8] = {};
 
 void setup()
 {
@@ -12,7 +14,8 @@ void setup()
 
 void loop()
 {
-
+  // message = receiveCAN();
+  // sendStandardCAN();
 }
 
 /*********************************************************************************************************
