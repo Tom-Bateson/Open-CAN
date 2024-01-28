@@ -11,5 +11,18 @@
 #define FILTER_MASK    0x03FF0000
 #define FILTER_1_ID    0x01000000
 #define FILTER_2_ID    0x01010000
+// adress...
+#define PLACEHOLDER1   0x00
+#define PLACEHOLDER2   0x01
+#define PLACEHOLDER3   0x02
+#define PLACEHOLDER4   0x03
+// Define states...
+enum state {
+  IDLE,
+  STATE_1,
+  STATE_3,
+  STATE_2,
+  STATE_4
+};
 
 #endif
