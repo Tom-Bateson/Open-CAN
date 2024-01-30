@@ -18,7 +18,10 @@ void startCAN() {
     CAN0.init_Filt(0,0,FILTER_1_ID);                // Init first filter...
     CAN0.init_Filt(1,0,FILTER_2_ID);                // Init second filter...
     // Set operation mode to normal so the MCP2515 sends acks to received data
-    CAN0.setMode(MCP_NORMAL);                     
+    CAN0.setMode(MCP_NORMAL);   
+
+    // CAN0.enOneShotTX(); 
+
     // Configuring pin for /INT input
     pinMode(CAN0_INT, INPUT);                            
 }
@@ -32,10 +35,18 @@ unsigned char* receiveCAN() {
 
 void sendStandardCAN(unsigned int address, byte data[8]) {
     // send data:  ID = 0x100, Standard CAN Frame, Data length = 8 bytes, 'data' = array of data bytes to send
-    byte sndStat = CAN0.sendMsgBuf(0x105, 0, 8, data);
-    if(sndStat == CAN_OK){
-        Serial.println("Message Sent Successfully!");
-    } else {
+    
+    
+    while (CAN0.sendMsgBuf(0x005, 0, 8, data) != CAN_OK) {
         Serial.println("Error Sending Message...");
     }
+    Serial.println("Message Sent Successfully!");
+    
+    
+    // byte sndStat = CAN0.sendMsgBuf(0x001, 0, 8, data);
+    // if(sndStat == CAN_OK){
+    //     Serial.println("Message Sent Successfully!");
+    // } else {
+    //     Serial.println("Error Sending Message...");
+    // }
 }

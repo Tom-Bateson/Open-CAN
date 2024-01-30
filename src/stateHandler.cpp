@@ -16,8 +16,17 @@ state stateHandler(unsigned char* message) {
                 return STATE_4;
                 break;
             default:
-                break;
                 return IDLE;
+                break;
         }
-    } 
+    }
+}
+
+bool stateChange(state &previous, state &current) {
+    if (previous != current) {
+        previous = current;
+        return true;
+    } else {
+        return false;
+    }
 }
