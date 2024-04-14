@@ -6,15 +6,18 @@
 #include <map>
 
 // Define the function pointer type
-typedef void (*FunctionPtr)();
+typedef void (*FunctionPtr)(unsigned char settings[6]);
 
-// Declare the functionMap variable as extern
-extern std::map<byte, FunctionPtr> functionMap;
+// Declare the functionDictionary variable as extern
+extern std::map<byte, FunctionPtr> functionDictionary;
+
+// Function prototype for comand runner
+void runNodeCommand(unsigned char command[8]);
 
 // Function prototype for setup
-void testInterface_userInput_setup();
+void testInterface_userInput_setup(unsigned char* settings);
 
 // Function prototype for main functionality
-void testInterface_userInput();
+void testInterface_userInput(unsigned char* settings);
 
 #endif
