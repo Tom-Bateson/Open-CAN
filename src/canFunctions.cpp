@@ -3,7 +3,8 @@
 
 long unsigned int rxId;
 unsigned char len;
-unsigned char rxBuf[8];
+// unsigned char rxBuf[8];
+unsigned char rxBuf_Old[8];
 
 #define CAN0_INT INT_PIN                            // Set INT pin
 MCP_CAN CAN0(CHIP_SELECT);                          // Set CS pin 
@@ -23,25 +24,47 @@ void startCAN() {
     // CAN0.enOneShotTX(); 
 
     // Configuring pin for /INT input
-    pinMode(CAN0_INT, INPUT);                            
+    pinMode(CAN0_INT, INPUT);     
+
+    // send, receve & error LED pins
+    pinMode(7, OUTPUT);
+    pinMode(9, OUTPUT);  
+    pinMode(3, OUTPUT);                      
 }
 
-unsigned char* receiveCAN() {
+bool receiveCAN(unsigned char rxBuf[8]) {
+
+    memcpy(rxBuf_Old, rxBuf, 8); // Copy the contents of rxBuf into rxBuf_Old
+
     if (!digitalRead(CAN0_INT)) {
         CAN0.readMsgBuf(&rxId, &len, rxBuf);
     }
-    return rxBuf;  // Return the pointer to rxBuf
+
+    bool change = memcmp(rxBuf_Old, rxBuf, 8) != 0;
+
+    if (change)
+    {
+        digitalWrite(7, HIGH);
+        delay(10);
+        digitalWrite(7, LOW);
+    }
+
+    return change;
 }
 
 void sendStandardCAN(unsigned int address, byte data[8]) {
-    // send data:  ID = 0x100, Standard CAN Frame, Data length = 8 bytes, 'data' = array of data bytes to send
     
-    
-    while (CAN0.sendMsgBuf(0x005, 0, 8, data) != CAN_OK) {
+    while (CAN0.sendMsgBuf(address, 0, 8, data) != CAN_OK) {
         Serial.println("Error Sending Message...");
+        digitalWrite(3, HIGH);
+        delay(10);
     }
+
     Serial.println("Message Sent Successfully!");
-    
+    digitalWrite(3, LOW);
+    digitalWrite(9, HIGH);
+    delay(10);
+    digitalWrite(9, LOW);
     
     // byte sndStat = CAN0.sendMsgBuf(0x001, 0, 8, data);
     // if(sndStat == CAN_OK){

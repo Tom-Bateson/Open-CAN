@@ -5,8 +5,9 @@
 #include <mcp_can.h>
 #include <SPI.h>
 
+
 void startCAN();
-unsigned char* receiveCAN();
+bool receiveCAN(unsigned char rxBuf[8]);
 void sendStandardCAN(unsigned int address, byte data[8]);
 
 #endif

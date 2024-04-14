@@ -18,11 +18,12 @@
 #define PLACEHOLDER4   0x03
 // Define states...
 enum state {
-  IDLE,
+  STARTUP,
   STATE_1,
   STATE_3,
   STATE_2,
-  STATE_4
+  ERROR,
+  IDLE
 };
 
 #endif
