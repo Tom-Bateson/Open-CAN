@@ -29,7 +29,7 @@ void runNodeCommand(unsigned char command[8]);
 void testInterface_userInput_setup();
 
 // Function prototype for main functionality
-void testInterface_userInput(unsigned char* settings);
+void testInterface_rainSensor(unsigned char* settings);
 
 // example prototype function
 void exampleNodeFunction(unsigned char* settings);

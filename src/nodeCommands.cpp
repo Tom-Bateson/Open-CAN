@@ -10,7 +10,7 @@ byte& systemState::State() {
 // Create a map to associate function pointers with values
 std::map<byte, FunctionPtr> functionDictionary = {
     {0x10, setState},
-    {0x20, testInterface_userInput},
+    {0x20, testInterface_rainSensor},
     {0x30, exampleNodeFunction}
 };
 
@@ -69,11 +69,10 @@ void testInterface_userInput_setup() {
 }
 
 // finctions for testInterface_userInput
-bool auto_on = false;
-bool once    = false;
+unsigned char weatherState = 0x00;
 unsigned long previousMillis = 0;
 
-void testInterface_userInput(unsigned char settings[6]) {
+void testInterface_rainSensor(unsigned char settings[6]) {
     // mesage array
     unsigned char response[8] = {0};
     // Get the current time
@@ -86,37 +85,48 @@ void testInterface_userInput(unsigned char settings[6]) {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
 
-    if (digitalRead(A5) == LOW)    {
-        auto_on = true;
+    if (digitalRead(A3) == LOW)    {
+        weatherState = 0x00;
     }
     
     if (digitalRead(A4) == LOW)    {
-        auto_on = false;
+        weatherState = 0x01;
     }
 
-    if (digitalRead(A3) == LOW)    {
-        once = true;
-        auto_on = false;
+    if (digitalRead(A5) == LOW)    {
+        weatherState = 0x02;
     }
 
-    if (once == true) {
-        response[2] = 0x00;
+    switch (weatherState)
+    {
+    case 0x00:
         digitalWrite(6, HIGH);
-    } else if (auto_on == false) {
-        response[2] = 0x01;
+        break;
+    case 0x01:
         digitalWrite(5, HIGH);
-    } else if (auto_on == true) {
-        response[2] = 0x02;
+        break;
+    case 0x02:
         digitalWrite(4, HIGH);
+        break;
     }
+
+
+    // if (once == true) {
+    //     response[2] = 0x00;
+    //     digitalWrite(6, HIGH);
+    // } else if (auto_on == false) {
+    //     response[2] = 0x01;
+    //     digitalWrite(5, HIGH);
+    // } else if (auto_on == true) {
+    //     response[2] = 0x02;
+    //     digitalWrite(4, HIGH);
+    // }
     
     if (currentMillis - previousMillis >= interval) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;
         // send can mesage with user imput state
         sendStandardCAN(0x005, response);
-        // set wip once to false after its state is sent
-        once = false;
     }
 }
 
