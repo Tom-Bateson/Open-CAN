@@ -11,19 +11,22 @@
 #define FILTER_MASK    0x03FF0000
 #define FILTER_1_ID    0x01000000
 #define FILTER_2_ID    0x01010000
-// adress...
-#define PLACEHOLDER1   0x00
-#define PLACEHOLDER2   0x01
-#define PLACEHOLDER3   0x02
-#define PLACEHOLDER4   0x03
-// Define states...
+// adress for states
+#define STARTUP_ADR         0x00
+#define RUN_ADR             0x01
+#define WAIT_ADR            0x02
+#define PLACEHOLDER_ADR_1   0x03
+#define PLACEHOLDER_ADR_2   0x04
+#define PLACEHOLDER_ADR_3   0x05
+// Define states
 enum state {
   STARTUP,
-  STATE_1,
-  STATE_3,
-  STATE_2,
-  ERROR,
-  IDLE
+  RUN,
+  WAIT,
+  STATE_PLACEHOLDER_1,
+  STATE_PLACEHOLDER_2,
+  STATE_PLACEHOLDER_3,
+  ERROR
 };
 
 #endif

@@ -1,9 +1,9 @@
-#ifndef STATEHANDLER_H
-#define STATEHANDLER_H
+// #ifndef STATEHANDLER_H
+// #define STATEHANDLER_H
 
-#include "config.hpp"
+// #include "config.hpp"
 
-state stateHandler(unsigned char* message);
-bool stateChange(state &previous, state current);
+// state stateHandler(unsigned char* message);
+// bool stateChange(state &previous, state current);
 
-#endif
+// #endif
