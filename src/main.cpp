@@ -1,6 +1,6 @@
+#include "config.hpp"
 #include "canFunctions.hpp"
 #include "stateHandler.hpp"
-#include "config.hpp"
 #include "nodeCommands.hpp"
 
 #include <Arduino.h>

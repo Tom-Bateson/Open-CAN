@@ -1,4 +1,5 @@
 #include "config.hpp"
+#include "canFunctions.hpp"
 #include "nodeCommands.hpp"
 
 byte& systemState::State() {
@@ -58,20 +59,65 @@ void setState(unsigned char settings[6]) {
 
 void testInterface_userInput_setup() {
     pinMode(4, OUTPUT);
-    pinMode(A3, INPUT_PULLUP);
-
+    pinMode(A5, INPUT_PULLUP);
+    
     pinMode(5, OUTPUT);
     pinMode(A4, INPUT_PULLUP);
 
     pinMode(6, OUTPUT);
-    pinMode(A5, INPUT_PULLUP);
+    pinMode(A3, INPUT_PULLUP);
 }
 
+// finctions for testInterface_userInput
+bool auto_on = false;
+bool once    = false;
+unsigned long previousMillis = 0;
+
 void testInterface_userInput(unsigned char settings[6]) {
-    Serial.println(settings[0]);
-    digitalWrite(4, HIGH);
-    digitalWrite(5, HIGH);
-    digitalWrite(6, HIGH);
+    // mesage array
+    unsigned char response[8] = {0};
+    // Get the current time
+    unsigned long currentMillis = millis();
+
+    const long interval = 10 * settings[0];
+
+    // set indecator leds to off
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    digitalWrite(6, LOW);
+
+    if (digitalRead(A5) == LOW)    {
+        auto_on = true;
+    }
+    
+    if (digitalRead(A4) == LOW)    {
+        auto_on = false;
+    }
+
+    if (digitalRead(A3) == LOW)    {
+        once = true;
+        auto_on = false;
+    }
+
+    if (once == true) {
+        response[2] = 0x00;
+        digitalWrite(6, HIGH);
+    } else if (auto_on == false) {
+        response[2] = 0x01;
+        digitalWrite(5, HIGH);
+    } else if (auto_on == true) {
+        response[2] = 0x02;
+        digitalWrite(4, HIGH);
+    }
+    
+    if (currentMillis - previousMillis >= interval) {
+        // Save the last time a mesage was sent
+        previousMillis = currentMillis;
+        // send can mesage with user imput state
+        sendStandardCAN(0x005, response);
+        // set wip once to false after its state is sent
+        once = false;
+    }
 }
 
 // this is an example function not for use in a program, it outputs the function setings and function return asress
@@ -85,5 +131,5 @@ void exampleNodeFunction(unsigned char settings[6]) {
     Serial.print(" : ");
     Serial.print(settings[3]);
     Serial.print(" : RETURN ADR : ");
-    Serial.print(settings[4]+settings[5],HEX);
+    Serial.println(settings[4]+settings[5],HEX);
 }
