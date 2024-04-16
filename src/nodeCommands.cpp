@@ -59,28 +59,31 @@ void setState(unsigned char settings[6]) {
 
 
 void handelUserInput_wiperSeting(unsigned char settings[6]) {
-    // mesage array
-    unsigned char response[8] = {0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-    uint16_t address;
+    // mesage arrays
+    unsigned char response_sensor[8] = {0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0xff, 0x01};
+    unsigned char response_motor[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0x01};
 
 
     switch (settings[0])
     {
     case 0x00:
-        address = 0x205;
-        response[2] = 0x20;
+        response_sensor[0] = 0x00;
+        response_motor[1] = 0x20;
         break;
     case 0x01:
-        address = 0x205;
-        response[2] = 0x21;
+        response_sensor[0] = 0x00;
+        response_motor[1] = 0x21;
         break;
     case 0x02:
-        address = 0x203;
-        response[2] = 0x20;
+        response_sensor[0] = 0x01;
         break;
     }
 
-    
+    // send can mesage to sensor node
+    sendStandardCAN(0x203, response_sensor);
+
+    // send can mesage to motor node
+    sendStandardCAN(0x205, response_motor);
 
 }
 
