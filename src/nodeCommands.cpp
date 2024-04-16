@@ -17,7 +17,7 @@ std::map<byte, FunctionPtr> functionDictionary = {
 void runNodeCommand(unsigned char command[8]) {
     // Find the function pointer associated with the variable
     auto funcId = functionDictionary.find(command[1]);
-    if (funcId != functionDictionary.end()) {
+    if (funcId != functionDictionary.end() && command[0] == 0x01) {
         // cut the function id and start/stop from the mesage to leave the function steings
         unsigned char functionSetings[6];
         memcpy(functionSetings, command + 2, 6);
