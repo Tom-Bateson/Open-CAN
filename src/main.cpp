@@ -15,7 +15,7 @@ void setup() {
 
 void loop() {
   switch(systemState::State()) {
-    case STARTUP:
+    case STARTUP: {
       // begin serial
       Serial.begin(115200);
       // start the interface to the can module over spi
@@ -36,16 +36,32 @@ void loop() {
       // // clear the mesage buffer redy for the next mesage
       // memset(message, 0, sizeof(message));
 
-      break;
     
+      break;
+    }
+
     case RUN:
+      
       // check the can modules buffer for a new mesage and update the  mesage array
       receiveCAN(message);
       // run the command indecated by the message
-      runNodeCommand(message);
+      // runNodeCommand(message);
 
       
-      
+      Serial.print("MESAGE: ");
+      Serial.print(message[0]);
+      Serial.print(" : ");
+      Serial.print(message[1]);
+      Serial.print(" : ");
+      Serial.print(message[2]);
+      Serial.print(" : ");
+      Serial.print(message[3]);
+      Serial.print(" : ");
+      Serial.print(message[4]);
+      Serial.print(" : ");
+      Serial.print(message[5]);
+      Serial.print(" : RETURN ADR : ");
+      Serial.println(message[6]+message[7],HEX);
       
 
       // on receve from wiper send pesage to sensor if needed
