@@ -25,11 +25,8 @@ void setState(unsigned char* settings);
 // Function prototype for comand runner
 void runNodeCommand(unsigned char command[8]);
 
-// Function prototype for setup
-void testInterface_wiperMotor_setup();
-
 // Function prototype for main functionality
-void testInterface_wiperMotor(unsigned char* settings);
+void handelUserInput_wiperSeting(unsigned char* settings);
 
 // example prototype function
 void exampleNodeFunction(unsigned char* settings);

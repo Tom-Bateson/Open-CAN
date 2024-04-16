@@ -10,7 +10,7 @@ byte& systemState::State() {
 // Create a map to associate function pointers with values
 std::map<byte, FunctionPtr> functionDictionary = {
     {0x10, setState},
-    {0x20, testInterface_wiperMotor},
+    {0x20, handelUserInput_wiperSeting},
     {0x30, exampleNodeFunction}
 };
 
@@ -57,62 +57,34 @@ void setState(unsigned char settings[6]) {
     }
 }
 
-void testInterface_wiperMotor_setup() {
-    pinMode(4, OUTPUT);
-    pinMode(5, OUTPUT);
-    pinMode(6, OUTPUT);
-}
 
-// finctions for testInterface_userInput
-unsigned long previousMillis = 0;
-
-void testInterface_wiperMotor(unsigned char settings[6]) {
+void handelUserInput_wiperSeting(unsigned char settings[6]) {
     // mesage array
-    // unsigned char response[8] = {0};
-    // Get the current time
-    unsigned long currentMillis = millis();
-
-    const long interval = 10 * settings[0];
-
-    // set indecator leds to off
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    digitalWrite(6, LOW);
+    unsigned char response[8] = {0x00, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+    uint16_t address;
 
 
-
-    switch (settings[1])
+    switch (settings[0])
     {
     case 0x00:
-        digitalWrite(6, HIGH);
+        address = 0x205;
+        response[2] = 0x20;
         break;
     case 0x01:
-        digitalWrite(5, HIGH);
+        address = 0x205;
+        response[2] = 0x21;
         break;
     case 0x02:
-        digitalWrite(4, HIGH);
+        address = 0x203;
+        response[2] = 0x20;
         break;
     }
 
-
-    // if (once == true) {
-    //     response[2] = 0x00;
-    //     digitalWrite(6, HIGH);
-    // } else if (auto_on == false) {
-    //     response[2] = 0x01;
-    //     digitalWrite(5, HIGH);
-    // } else if (auto_on == true) {
-    //     response[2] = 0x02;
-    //     digitalWrite(4, HIGH);
-    // }
     
-    if (currentMillis - previousMillis >= interval) {
-        // Save the last time a mesage was sent
-        previousMillis = currentMillis;
-        // send can mesage with user imput state
-        // sendStandardCAN(0x005, response);
-    }
+
 }
+
+
 
 // this is an example function not for use in a program, it outputs the function setings and function return asress
 void exampleNodeFunction(unsigned char settings[6]) {

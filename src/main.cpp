@@ -20,10 +20,10 @@ void loop() {
       Serial.begin(115200);
       // start the interface to the can module over spi
       startCAN();
-      // run through setup of node comands that need it (BAD - find a better way to do this)
-      testInterface_wiperMotor_setup();
       // after setup teansition to initail operating state
       systemState::State() = RUN;
+
+
 
       unsigned char send[8] = {0x00, 0x20, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
       // unsigned char send[8] = {0};
