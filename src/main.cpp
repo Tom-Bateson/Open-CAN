@@ -25,9 +25,16 @@ void loop() {
       // after setup teansition to initail operating state
       systemState::State() = RUN;
 
-      // message[8]
+      unsigned char send[8] = {0x20, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
+      // unsigned char send[8] = {0};
+      // send[0] = 0x20; // change and add mesage formating
+
+
       // send state to wipers user imput to start them
-      sendStandardCAN(0x000,message);
+      sendStandardCAN(0x201,send);
+
+      // // clear the mesage buffer redy for the next mesage
+      // memset(message, 0, sizeof(message));
 
       break;
     
@@ -37,7 +44,9 @@ void loop() {
       // run the command indecated by the message
       runNodeCommand(message);
 
-
+      
+      
+      
 
       // on receve from wiper send pesage to sensor if needed
 
