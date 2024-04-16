@@ -57,7 +57,7 @@ void setState(unsigned char settings[6]) {
     }
 }
 
-void testInterface_userInput_setup() {
+void testInterface_rainSensor_setup() {
     pinMode(4, OUTPUT);
     pinMode(A5, INPUT_PULLUP);
     
@@ -110,18 +110,6 @@ void testInterface_rainSensor(unsigned char settings[6]) {
         break;
     }
 
-
-    // if (once == true) {
-    //     response[2] = 0x00;
-    //     digitalWrite(6, HIGH);
-    // } else if (auto_on == false) {
-    //     response[2] = 0x01;
-    //     digitalWrite(5, HIGH);
-    // } else if (auto_on == true) {
-    //     response[2] = 0x02;
-    //     digitalWrite(4, HIGH);
-    // }
-    
     if (currentMillis - previousMillis >= interval) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;

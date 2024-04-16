@@ -26,7 +26,7 @@ void setState(unsigned char* settings);
 void runNodeCommand(unsigned char command[8]);
 
 // Function prototype for setup
-void testInterface_userInput_setup();
+void testInterface_rainSensor_setup();
 
 // Function prototype for main functionality
 void testInterface_rainSensor(unsigned char* settings);
