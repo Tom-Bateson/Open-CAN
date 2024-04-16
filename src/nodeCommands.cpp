@@ -27,8 +27,8 @@ void runNodeCommand(unsigned char command[8]) {
         func(functionSetings);
     } else {
         // Handle invalid funcid
-        Serial.print("Function dose not exist: ");
-        Serial.println(command[1]);
+        // Serial.print("Function dose not exist: ");
+        // Serial.println(command[1]);
     }
 }
 
@@ -94,7 +94,7 @@ void testInterface_wiperMotorSeting(unsigned char settings[6]) {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
 
-    Serial.println("KILL YOURSELF S");
+    // Serial.println("KILL YOURSELF S");
 
     // switch (settings[1])
     // {
