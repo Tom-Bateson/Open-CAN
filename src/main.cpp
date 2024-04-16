@@ -24,6 +24,11 @@ void loop() {
       testInterface_wiperMotor_setup();
       // after setup teansition to initail operating state
       systemState::State() = RUN;
+
+      // message[8]
+      // send state to wipers user imput to start them
+      sendStandardCAN(0x000,message);
+
       break;
     
     case RUN:
@@ -31,6 +36,15 @@ void loop() {
       receiveCAN(message);
       // run the command indecated by the message
       runNodeCommand(message);
+
+
+
+      // on receve from wiper send pesage to sensor if needed
+
+      // receve from sensor info and store
+
+
+
       break;
 
     case WAIT:
@@ -41,10 +55,4 @@ void loop() {
       
       break;
   }
-
-  // if (change)
-  // {
-  //   sendStandardCAN(0x005, message);
-  // }
-  
 }
