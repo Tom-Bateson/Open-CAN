@@ -74,11 +74,11 @@ unsigned long previousMillis = 0;
 
 void testInterface_rainSensor(unsigned char settings[6]) {
     // mesage array
-    unsigned char response[8] = {0};
+    unsigned char response[8] = {0x01, 0x20, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
     // Get the current time
     unsigned long currentMillis = millis();
 
-    const long interval = 10 * settings[0];
+    unsigned long interval = 10 * settings[0];
 
     // set indecator leds to off
     digitalWrite(4, LOW);
@@ -96,6 +96,8 @@ void testInterface_rainSensor(unsigned char settings[6]) {
     if (digitalRead(A5) == LOW)    {
         weatherState = 0x02;
     }
+
+    response[3] = weatherState;
 
     switch (weatherState)
     {
