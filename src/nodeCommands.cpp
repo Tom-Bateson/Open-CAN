@@ -17,7 +17,7 @@ std::map<byte, FunctionPtr> functionDictionary = {
 void runNodeCommand(unsigned char command[8]) {
     // Find the function pointer associated with the variable
     auto funcId = functionDictionary.find(command[1]);
-    if (funcId != functionDictionary.end()) {
+    if (funcId != functionDictionary.end() && command[0] == 0x01) {
         // cut the function id and start/stop from the mesage to leave the function steings
         unsigned char functionSetings[6];
         memcpy(functionSetings, command + 2, 6);
@@ -60,8 +60,8 @@ void setState(unsigned char settings[6]) {
 
 void handelUserInput_wiperSeting(unsigned char settings[6]) {
     // mesage arrays
-    unsigned char response_sensor[8] = {0x00, 0x20, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
-    unsigned char response_motor[8] = {0x00, 0x00, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
+    unsigned char response_sensor[8] = {0x01, 0x20, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
+    unsigned char response_motor[8] = {0x01, 0x00, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
 
 
     switch (settings[0])
