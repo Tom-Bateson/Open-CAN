@@ -9,8 +9,8 @@
 #define MCP_CLOCK      MCP_16MHZ
 // address masking config
 #define FILTER_MASK    0x03FF0000
-#define FILTER_1_ID    0x01000000
-#define FILTER_2_ID    0x01010000
+#define FILTER_1_ID    0x02010000
+#define FILTER_2_ID    0x02020000
 // adress for states
 #define STARTUP_ADR         0x00
 #define RUN_ADR             0x01
