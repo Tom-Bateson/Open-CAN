@@ -71,9 +71,7 @@ void testInterface_wiperMotorOnce(unsigned char settings[6]) {
     // Get the current time
     unsigned long currentMillis = millis();
 
-    const long interval = 10 * settings[0];
-
-    digitalWrite(5, LOW);
+    unsigned long interval = 10 * settings[0];
 
     if (currentMillis - previousMillis >= interval) {
         // Save the last time a mesage was sent
@@ -89,7 +87,7 @@ void testInterface_wiperMotorSeting(unsigned char settings[6]) {
     // Get the current time
     unsigned long currentMillis = millis();
 
-    const long interval = 10 * settings[0];
+    unsigned long interval = 10 * settings[0];
 
     // set indecator leds to off
     digitalWrite(4, LOW);
