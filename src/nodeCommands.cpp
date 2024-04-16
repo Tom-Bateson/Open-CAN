@@ -75,7 +75,8 @@ unsigned long previousMillis = 0;
 
 void testInterface_userInput(unsigned char settings[6]) {
     // mesage array
-    unsigned char response[8] = {0};
+    unsigned char response[8] = {0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
     // Get the current time
     unsigned long currentMillis = millis();
 
