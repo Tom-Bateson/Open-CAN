@@ -16,7 +16,7 @@ std::map<byte, FunctionPtr> functionDictionary = {
 
 void runNodeCommand(unsigned char command[8]) {
     // Find the function pointer associated with the variable
-    auto funcId = functionDictionary.find(command[0]);
+    auto funcId = functionDictionary.find(command[1]);
     if (funcId != functionDictionary.end()) {
         // cut the function id and start/stop from the mesage to leave the function steings
         unsigned char functionSetings[6];
@@ -27,7 +27,7 @@ void runNodeCommand(unsigned char command[8]) {
     } else {
         // Handle invalid funcid
         Serial.print("Function dose not exist: ");
-        Serial.println(command[0]);
+        Serial.println(command[1]);
     }
 }
 
