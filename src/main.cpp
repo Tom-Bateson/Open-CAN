@@ -25,7 +25,7 @@ void loop() {
       // after setup teansition to initail operating state
       systemState::State() = RUN;
 
-      unsigned char send[8] = {0x20, 0x00, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
+      unsigned char send[8] = {0x20, 0x00, 0x10, 0x00, 0x00, 0x00, 0xff, 0x01};
       // unsigned char send[8] = {0};
       // send[0] = 0x20; // change and add mesage formating
 
