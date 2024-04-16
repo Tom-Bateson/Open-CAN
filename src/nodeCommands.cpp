@@ -10,7 +10,7 @@ byte& systemState::State() {
 // Create a map to associate function pointers with values
 std::map<byte, FunctionPtr> functionDictionary = {
     {0x10, setState},
-    {0x20, testInterface_rainSensor},
+    {0x20, testInterface_wiperMotor},
     {0x30, exampleNodeFunction}
 };
 
@@ -57,24 +57,18 @@ void setState(unsigned char settings[6]) {
     }
 }
 
-void testInterface_userInput_setup() {
+void testInterface_wiperMotor_setup() {
     pinMode(4, OUTPUT);
-    pinMode(A5, INPUT_PULLUP);
-    
     pinMode(5, OUTPUT);
-    pinMode(A4, INPUT_PULLUP);
-
     pinMode(6, OUTPUT);
-    pinMode(A3, INPUT_PULLUP);
 }
 
 // finctions for testInterface_userInput
-unsigned char weatherState = 0x00;
 unsigned long previousMillis = 0;
 
-void testInterface_rainSensor(unsigned char settings[6]) {
+void testInterface_wiperMotor(unsigned char settings[6]) {
     // mesage array
-    unsigned char response[8] = {0};
+    // unsigned char response[8] = {0};
     // Get the current time
     unsigned long currentMillis = millis();
 
@@ -85,19 +79,9 @@ void testInterface_rainSensor(unsigned char settings[6]) {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
 
-    if (digitalRead(A3) == LOW)    {
-        weatherState = 0x00;
-    }
-    
-    if (digitalRead(A4) == LOW)    {
-        weatherState = 0x01;
-    }
 
-    if (digitalRead(A5) == LOW)    {
-        weatherState = 0x02;
-    }
 
-    switch (weatherState)
+    switch (settings[1])
     {
     case 0x00:
         digitalWrite(6, HIGH);
@@ -126,7 +110,7 @@ void testInterface_rainSensor(unsigned char settings[6]) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;
         // send can mesage with user imput state
-        sendStandardCAN(0x005, response);
+        // sendStandardCAN(0x005, response);
     }
 }
 

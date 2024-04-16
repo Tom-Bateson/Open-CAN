@@ -26,10 +26,10 @@ void setState(unsigned char* settings);
 void runNodeCommand(unsigned char command[8]);
 
 // Function prototype for setup
-void testInterface_userInput_setup();
+void testInterface_wiperMotor_setup();
 
 // Function prototype for main functionality
-void testInterface_rainSensor(unsigned char* settings);
+void testInterface_wiperMotor(unsigned char* settings);
 
 // example prototype function
 void exampleNodeFunction(unsigned char* settings);
