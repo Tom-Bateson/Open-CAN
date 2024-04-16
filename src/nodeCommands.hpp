@@ -29,7 +29,10 @@ void runNodeCommand(unsigned char command[8]);
 void testInterface_wiperMotor_setup();
 
 // Function prototype for main functionality
-void testInterface_wiperMotor(unsigned char* settings);
+void testInterface_wiperMotorOnce(unsigned char* settings);
+
+// Function prototype for main functionality
+void testInterface_wiperMotorSeting(unsigned char* settings);
 
 // example prototype function
 void exampleNodeFunction(unsigned char* settings);

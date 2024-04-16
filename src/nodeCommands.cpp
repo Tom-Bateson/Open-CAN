@@ -10,14 +10,15 @@ byte& systemState::State() {
 // Create a map to associate function pointers with values
 std::map<byte, FunctionPtr> functionDictionary = {
     {0x10, setState},
-    {0x20, testInterface_wiperMotor},
+    {0x20, testInterface_wiperMotorOnce},
+    {0x21, testInterface_wiperMotorSeting},
     {0x30, exampleNodeFunction}
 };
 
 void runNodeCommand(unsigned char command[8]) {
     // Find the function pointer associated with the variable
-    auto funcId = functionDictionary.find(command[0]);
-    if (funcId != functionDictionary.end()) {
+    auto funcId = functionDictionary.find(command[1]);
+    if (funcId != functionDictionary.end() && command[0] == 0x01) {
         // cut the function id and start/stop from the mesage to leave the function steings
         unsigned char functionSetings[6];
         memcpy(functionSetings, command + 2, 6);
@@ -27,7 +28,7 @@ void runNodeCommand(unsigned char command[8]) {
     } else {
         // Handle invalid funcid
         Serial.print("Function dose not exist: ");
-        Serial.println(command[0]);
+        Serial.println(command[1]);
     }
 }
 
@@ -63,12 +64,28 @@ void testInterface_wiperMotor_setup() {
     pinMode(6, OUTPUT);
 }
 
-// finctions for testInterface_userInput
+// finctions for testInterface_wiperMotorOnce & testInterface_wiperMotorSeting
 unsigned long previousMillis = 0;
 
-void testInterface_wiperMotor(unsigned char settings[6]) {
-    // mesage array
-    // unsigned char response[8] = {0};
+void testInterface_wiperMotorOnce(unsigned char settings[6]) {
+    // Get the current time
+    unsigned long currentMillis = millis();
+
+    const long interval = 10 * settings[0];
+
+    digitalWrite(5, LOW);
+
+    if (currentMillis - previousMillis >= interval) {
+        // Save the last time a mesage was sent
+        previousMillis = currentMillis;
+        
+        digitalWrite(5, HIGH);
+    }
+
+
+}
+
+void testInterface_wiperMotorSeting(unsigned char settings[6]) {
     // Get the current time
     unsigned long currentMillis = millis();
 
@@ -79,20 +96,20 @@ void testInterface_wiperMotor(unsigned char settings[6]) {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
 
+    Serial.println("KILL YOURSELF S");
 
-
-    switch (settings[1])
-    {
-    case 0x00:
-        digitalWrite(6, HIGH);
-        break;
-    case 0x01:
-        digitalWrite(5, HIGH);
-        break;
-    case 0x02:
-        digitalWrite(4, HIGH);
-        break;
-    }
+    // switch (settings[1])
+    // {
+    // case 0x00:
+    //     digitalWrite(6, HIGH);
+    //     break;
+    // case 0x01:
+    //     digitalWrite(5, HIGH);
+    //     break;
+    // case 0x02:
+    //     digitalWrite(4, HIGH);
+    //     break;
+    // }
 
 
     // if (once == true) {
