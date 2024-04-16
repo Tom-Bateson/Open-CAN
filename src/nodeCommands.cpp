@@ -116,7 +116,7 @@ void testInterface_rainSensor(unsigned char settings[6]) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;
         // send can mesage with user imput state
-        sendStandardCAN(0x005, response);
+        sendStandardCAN(0x205, response);
     }
 }
 
