@@ -74,7 +74,7 @@ unsigned long previousMillis = 0;
 
 void testInterface_rainSensor(unsigned char settings[6]) {
     // mesage array
-    unsigned char response[8] = {0x01, 0x20, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
+    unsigned char response[8] = {0x01, 0x21, 0x10, 0x00, 0x00, 0x00, 0x00, 0x00};
     // Get the current time
     unsigned long currentMillis = millis();
 
