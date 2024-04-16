@@ -114,7 +114,7 @@ void testInterface_userInput(unsigned char settings[6]) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;
         // send can mesage with user imput state
-        sendStandardCAN(0x005, response);
+        sendStandardCAN((settings[4]+settings[5]), response);
         // set wip once to false after its state is sent
         once = false;
     }
