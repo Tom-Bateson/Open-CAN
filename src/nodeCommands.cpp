@@ -73,6 +73,10 @@ void testInterface_wiperMotorOnce(unsigned char settings[6]) {
 
     unsigned long interval = 10 * settings[0];
 
+    // set indecator leds to off
+    digitalWrite(4, LOW);
+    digitalWrite(6, LOW);
+
     if (currentMillis - previousMillis >= interval) {
         // Save the last time a mesage was sent
         previousMillis = currentMillis;
@@ -94,20 +98,18 @@ void testInterface_wiperMotorSeting(unsigned char settings[6]) {
     digitalWrite(5, LOW);
     digitalWrite(6, LOW);
 
-    // Serial.println("KILL YOURSELF S");
-
-    // switch (settings[1])
-    // {
-    // case 0x00:
-    //     digitalWrite(6, HIGH);
-    //     break;
-    // case 0x01:
-    //     digitalWrite(5, HIGH);
-    //     break;
-    // case 0x02:
-    //     digitalWrite(4, HIGH);
-    //     break;
-    // }
+    switch (settings[1])
+    {
+    case 0x00:
+        digitalWrite(6, HIGH);
+        break;
+    case 0x01:
+        digitalWrite(5, HIGH);
+        break;
+    case 0x02:
+        digitalWrite(4, HIGH);
+        break;
+    }
 
 
     // if (once == true) {
