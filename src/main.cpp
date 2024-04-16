@@ -43,9 +43,16 @@ void loop() {
     case RUN:
       
       // check the can modules buffer for a new mesage and update the  mesage array
-      receiveCAN(message);
-      // run the command indecated by the message
-      runNodeCommand(message);
+      // receiveCAN(message);
+
+      if (receiveCAN(message))
+      {
+        // run the command indecated by the message
+        runNodeCommand(message);
+      }
+      
+
+      
 
       
       // Serial.print("MESAGE: ");
